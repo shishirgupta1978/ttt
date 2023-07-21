@@ -15,24 +15,17 @@ export const ViewDocument = (props) => {
     const [figures, setFigures] = useState(props.result.figures);
     const handleGetData = () => {
         const updatedData = JSON.stringify(figures);
+        console.log(updatedData)
         const token=localStorage.getItem("Tokens") ? JSON.parse(localStorage.getItem("Tokens"))?.access :''
 			const config = { method: "post", headers: { 'Content-Type': "application/json", "Authorization": "Bearer " + token  }, data:updatedData }
 			axiosApi(`/api/alt-text-generator/save-data/`, config, setData1,setContext);
-        // You can perform further actions with the updated data, such as sending it to an API or updating the state of a parent component.
+
       };
       
-      const handleTextAreaChange = (figureId, updatedContent) => {
-        // Find the figure in the figures array and update its content
-        const updatedFigures = figures.map((figure) => {
-          if (figure.id === figureId) {
-            return { ...figure, content: updatedContent };
-          }
-          return figure;
-        });
-    
-        setFigures(updatedFigures);
-      };
 
+
+  
+  
 
 
     if(props.result.type==="Docx")
@@ -45,7 +38,7 @@ export const ViewDocument = (props) => {
             <tbody>
             
             {figures.map((figure) => (
-          <TextAreaRow key={figure.id} figure={figure}  onTextAreaChange={handleTextAreaChange}/>
+          <TextAreaRow key={figure.id} figure={figure} setFigures={setFigures} />
           ))}
 
 
