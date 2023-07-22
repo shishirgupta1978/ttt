@@ -61,7 +61,7 @@ export const HomePage = () => {
 
   
 const session = <div>{timeLeft !== null ? (
-  <p >Session Expire after: {formatTime(timeLeft)}</p>
+  <p >&nbsp;Session will expire after: {formatTime(timeLeft)}</p>
 ) : (
   <p>No JWT token found.</p>
 )}    </div>

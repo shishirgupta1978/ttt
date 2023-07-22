@@ -13,9 +13,15 @@ import { NavLink } from 'react-router-dom';
 export const LoginPage = () => {
 	const [data, setData] = useState({ 'is_loading': false, 'is_error': false, 'is_success': false, 'result': null, 'message': null })
 	const { context,setContext } = useContext(MyContext);
+	const [isChecked, setIsChecked] = useState(localStorage.getItem("email") ? true :false);
+
+	const handleCheckboxChange = (event) => {
+	  setIsChecked(event.target.checked);
+	};
+  
 
 	const [formData, setFormData] = useState({
-		email: '',
+		email: localStorage.getItem("email") ? localStorage.getItem("email") :'',
 		password: '',
 	  });
 
@@ -37,7 +43,7 @@ export const LoginPage = () => {
 		{
 			console.log(data);
 			localStorage.setItem("Tokens",JSON.stringify(data.result));
-     	    setContext({...context,"user":jwt_decode(data.result?.access)});
+     	    setContext({...context,user:jwt_decode(data.result?.access)});
 
 			navigate("/");
 
@@ -58,6 +64,18 @@ export const LoginPage = () => {
 		if (!formData.password) {
 			toast.error("A password must be provided");
 		}
+
+		if(isChecked)
+		{
+			console.log("checked")
+			localStorage.setItem("email",formData.email.toLowerCase())
+		}
+		else{
+			console.log("unchecked")
+			localStorage.removeItem("email")
+		}
+
+
 		const config = { method: "post", headers: { "Content-Type": "application/json" }, data:formData }
 		axiosApi(`api/token/`, config, setData, setContext);
 	
@@ -83,8 +101,7 @@ export const LoginPage = () => {
 							<MDBInput  label='Password' type='password' name='password' value={formData.password} onChange={handleChange}  className="mb-3" required/>
 							<MDBRow>
 							<MDBCol>
-						
-							<input type="checkbox"/> Remember me
+							<input type="checkbox" checked={isChecked} onChange={handleCheckboxChange} />&nbsp; Remember me
 					</MDBCol>
 					<MDBCol>
 						<Link to="/forgetpassword"> Forget password?</Link>

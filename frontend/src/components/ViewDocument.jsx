@@ -21,13 +21,8 @@ export const ViewDocument = (props) => {
     };
 
 
-
-
-
-
-
         return (
-            <div className="card py-3" style={{ width: '100%' }}>
+            <div className="bg-light" style={{ width: '100%' }}>
                 {data1.is_loading && <Spinner />}
                 <h3 className="text-center">
                     Alt Text
