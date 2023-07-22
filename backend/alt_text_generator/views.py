@@ -1,4 +1,6 @@
 from django.http import HttpResponse
+from django.core.exceptions import ValidationError
+
 import json
 import datetime
 from django.utils import timezone
@@ -27,21 +29,30 @@ def api_upload_document(request):
     data["type"]=request.POST.get('type')
     data["created_by"]=request.user.pk
     serializer = CreateDocumentSerializer(data=data)
-    if serializer.is_valid():
-        document=serializer.save()
-        try:
-            fig_list = figure_predictions(str(settings.MEDIA_ROOT)+serializer.data['source'].replace("/media/","/"))
-        except Exception as e:
-            print(e)
-            fig_list=[]
+    try:
+        serializer.is_valid(raise_exception=True)
+    except ValidationError as e:
+        return Response({"error": str(e)}, status=status.HTTP_400_BAD_REQUEST)
+
+    document=serializer.save()
+    try:
+        print("Processing...")
+        fig_list = figure_predictions(str(settings.MEDIA_ROOT)+serializer.data['source'].replace("/media/","/"))
+        print("Processing Done...")
         for figure in fig_list:
             print(figure[0])
             print(figure[1])
             Figure.objects.create(number=figure[0],alt_text1=figure[1],alt_text2=figure[2],document=document)
         serializer1=DocumentSerializer(document)
-        
         return Response(serializer1.data, status=status.HTTP_201_CREATED)
-    return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+    except Exception as e:
+        print("Error in Processing")
+        print(e)
+        return Response({"error": "An error occurred during processing."}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+
+        
+        
 
 
 @api_view(['POST'])
