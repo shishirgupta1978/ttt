@@ -7,6 +7,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import {Spinner,Title} from "../components";
 import {MyContext,axiosApi} from "..";
+import { NoProfileImg } from "..";
 
 export const ProfilePage = () => {
 	const {uid} =useParams()
@@ -88,7 +89,7 @@ export const ProfilePage = () => {
 				<MDBRow className="mt-3">
 					<MDBCol className="justify-content-center">
 						<form onSubmit={submitHandler}>
-							<img src='' />
+							<img src={NoProfileImg} alt="Profile Pic" width="80px" height="80px" className="mb-3" style={{margin:'auto',display :'block'}} />
 							<MDBInput  label='First Name' type='text' name='first_name' value={formData.first_name} onChange={handleChange} className="mb-3"/>
 							<MDBInput  label='Last Name' type='text' name='last_name' value={formData.last_name} onChange={handleChange} className="mb-2"/>
 							Select Document: {formData.documents ? <a href="">Download</a> :""}

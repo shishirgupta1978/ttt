@@ -7,9 +7,8 @@ import { Spinner } from '../components';
 import { useNavigate } from "react-router-dom";
 
 
-export const ViewPage = () => {
+export const Dashboard1 = () => {
   const { context,setContext } = useContext(MyContext);
-  const navigate = useNavigate();
 
 	const [data, setData] = useState({ 'is_loading': false, 'is_error': false, 'is_success': false, 'result': null, 'message': null })
 	const [source1, setSource1] = useState(null);

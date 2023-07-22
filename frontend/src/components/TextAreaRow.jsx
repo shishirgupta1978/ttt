@@ -3,7 +3,6 @@ import React, { useState } from 'react';
 
 
 
-
 export const TextAreaRow = (props) => {
   const [figure, setFigure1] = useState(props.figure);
   const [editMode, setEditMode] = useState(false);
@@ -72,10 +71,10 @@ export const TextAreaRow = (props) => {
 
   return (
     <tr key={props.figure.id}>
-      <td colSpan="2" style={{ verticalAlign: "middle", padding: "20px" }}>
+      <td colSpan={2} style={{ verticalAlign: "middle" }}>
         {props.figure.number}
       </td>
-      <td colSpan="2" style={{ verticalAlign: "middle", padding: "20px" }}>
+      <td style={{ verticalAlign: "middle", width:'140px' }}>
         <input
           type="radio"
           value={1}
@@ -90,34 +89,32 @@ export const TextAreaRow = (props) => {
           onChange={(event) => handleTextAreaSelection(event, figure.id)}
         />&nbsp;&nbsp;&nbsp;Alt&nbsp;Text&nbsp;2
       </td>
-      <td colSpan="4" style={{ verticalAlign: "middle", padding: "20px" }}>
+      <td colSpan={4} style={{ verticalAlign: "middle", paddingLeft: "20px" }}>
         {props.figure.is_alt_text1_selected == true ? (
           <textarea
             value={props.figure.alt_text1}
-            style={{ padding: "10px", margin: "0px", border: "0" }}
+            style={{ padding: "5px", margin: "0px", border: "0", width:'100%' }}
             onChange={(event) => handleTextareaChange(event, figure.id)}
             readOnly={!editMode}
-            rows={3}
-            cols={40}
+            rows={2}
           />
         ) : (
           <textarea
             value={props.figure.alt_text2}
-            style={{ padding: "10px", margin: "0px", border: "0" }}
+            style={{ padding: "5px", margin: "0px", border: "0", width:'100%' }}
             onChange={(event) => handleTextareaChange2(event, figure.id)}
             readOnly={!editMode}
-            rows={3}
-            cols={40}
+            rows={2}
           />
         )}
       </td>
-      <td style={{ verticalAlign: "middle" }}>
+      <td  style={{ verticalAlign: "middle",width:'130px' }}>
         {editMode ? (
-          <button className="btn btn-outline-primary" onClick={handleSaveClick}>
+          <button className="btn btn-outline-secondary" onClick={handleSaveClick}>
             Save
           </button>
         ) : (
-          <button className="btn btn-outline-primary" onClick={handleEditClick}>
+          <button className="btn btn-outline-secondary" onClick={handleEditClick}>
             Edit
           </button>
         )}

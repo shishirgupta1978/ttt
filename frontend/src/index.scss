@@ -202,6 +202,66 @@ a.btn.btn-primary:active {
 	background-color: #50817e;
 	border-color: #4b7976;
 }
+.sidebar {
+	position: fixed;
+	top: 0;
+	left: -350px; /* Initial position outside the screen */
+	height: 100%;
+	width: 350px;
+	background-color: #e4e4e4;
+	transition: left 0.3s ease-in-out; /* Smooth slide-in and slide-out transition */
+	z-index: 100;
+  }
+  
+  .sidebar.open {
+	left: 0; /* Show the sidebar by bringing it into the screen */
+  }
+  
+  .toggle-button {
+	position: absolute;
+	top: 3.45rem;
+	left: 1.5rem; /* Move the toggle button to the left side */
+	background: transparent;
+	font-size: 2rem;
+	cursor: pointer;
+	outline: none;
+	border: none;
+  }
+  .main-height{
+	height: 90vh;
+	overflow-y: auto;
+  }
+  .dashboard-content {
+	padding: 0px;
+	height: 84vh;
+	transition: margin-left 0.3s ease-in-out; /* Smoothly adjust the margin */
+  }
+  
+  .sidebar.open ~ .dashboard-content {
+	margin-left: 350px; /* Expand main content when the sidebar is open */
+  }
+  
+  .sidebar-menu {
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	height: 100%;
+	padding-top: 1rem;
+  }
+  
+  .sidebar-menu a {
+	text-decoration: none;
+	color: #000;
+	font-size: 1.5rem;
+	padding: 0.5rem;
+	transition: color 0.3s ease-in-out;
+  }
+  
+  .sidebar-menu a:hover {
+	color: #e31837;
+  }
+  
 
 @media (prefers-reduced-motion: reduce) {
 	a.btn.btn-primary {
@@ -230,6 +290,8 @@ a.btn.btn-primary:active {
 	border-radius: 50%;
 	animation: spin 1.2s linear infinite;
 }
+
+
 
 
 @keyframes spin {

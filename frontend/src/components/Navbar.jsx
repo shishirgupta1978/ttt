@@ -4,7 +4,7 @@ import {NavLink} from 'react-router-dom'
 import { useNavigate } from "react-router-dom";
 import {MDBContainer,MDBNavbar,MDBNavbarBrand, MDBNavbarToggler, MDBIcon, MDBNavbarNav, MDBNavbarItem, MDBNavbarLink, MDBDropdown, MDBDropdownToggle, MDBDropdownMenu, MDBDropdownItem, MDBCollapse } from 'mdb-react-ui-kit';
 import { FaSignInAlt, FaSignOutAlt } from "react-icons/fa";
-import { BgImg } from '..';
+import { NoProfileImg,LogoImg } from '..';
 
 export const Navbar = () => {
   const { context,setContext } = useContext(MyContext);
@@ -13,7 +13,7 @@ export const Navbar = () => {
 
 	const logoutHandler = () => {
     localStorage.removeItem("Tokens");
-     	    setContext({...context,"user":null});
+     	    setContext({...context,user:null});
 
 		navigate("/");
 	};
@@ -26,7 +26,7 @@ export const Navbar = () => {
     <>
         <MDBNavbar sticky  expand='lg' style={{backgroundColor: '#3d4a61' }} dark  >
         <MDBContainer fluid>
-          <MDBNavbarBrand tag={NavLink} to="/">APTARA</MDBNavbarBrand>
+          <MDBNavbarBrand tag={NavLink} to="/"><img src={LogoImg} height="30px"/></MDBNavbarBrand>
   
                   {context.user && context.user ? <>   <MDBNavbarToggler
             aria-controls='navbarSupportedContent'
@@ -44,7 +44,7 @@ export const Navbar = () => {
               <MDBDropdown>
                 <MDBDropdownToggle  tag={NavLink} className='nav-link' role='button'>
                 Hi, {context.user.username.toUpperCase() } <img
-                src={context.user.pdrofile_pic ? context.user.profile_pic : BgImg}
+                src={context.user.pdrofile_pic ? context.user.profile_pic : NoProfileImg}
                 alt=''
                 style={{ width: '28px', height: '28px' }}
                 className='rounded-circle'

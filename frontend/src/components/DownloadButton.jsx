@@ -5,32 +5,47 @@ export const  DownloadButton= (props)=> {
 
 
   const handleDownload = () => {
-    // Create your custom JSON data
+    const resultdata={}
     const customData =JSON.parse(props.result)
-    const customData1 = {
-      name: 'John Doe',
-      age: 30,
-      email: 'johndoe@example.com',
-    };
+    let document_name=null
+    if(customData.length>0)
+    {
+      document_name=customData[0]["document"]
+      
+    }
+   
+      resultdata["document"]=document_name
 
-    // Convert the JSON data to a string
-    const json = JSON.stringify(customData, null, 4);
+    
+    for (var i = 0; i < customData.length; i++){
+      var obj = customData[i];
+      if(obj["is_alt_text1_selected"]===true)
+      {
+        obj["alt_text"]=obj["alt_text1"]
+      }
+      else{
+        obj["alt_text"]=obj["alt_text2"]
+      }
+      delete obj["id"]
+      delete obj["alt_text1"]
+      delete obj["alt_text2"]
+      delete obj["is_alt_text1_selected"]
+      delete obj["document"]
+    }
+    resultdata["figures"]=customData
 
-    // Create a blob from the JSON string
+    const json = JSON.stringify(resultdata, null, 4);
+
     const blob = new Blob([json], { type: 'application/json' });
 
-    // Create a temporary URL for the blob
     const url = URL.createObjectURL(blob);
 
-    // Create a download link element
     const link = document.createElement('a');
     link.href = url;
     link.download = 'custom_data.json';
 
-    // Programmatically click the download link
     link.click();
 
-    // Clean up the temporary URL
     URL.revokeObjectURL(url);
   };
 
