@@ -7,14 +7,18 @@ export const  DownloadButton= (props)=> {
   const handleDownload = () => {
     const resultdata={}
     const customData =JSON.parse(props.result)
+    let document_id=null
     let document_name=null
+
     if(customData.length>0)
     {
-      document_name=customData[0]["document"]
+      document_id=customData[0]["document"]
+      document_name=customData[0]["document_name"]
       
     }
    
-      resultdata["document"]=document_name
+      resultdata["document_id"]=document_id
+      resultdata["document_name"]=document_name
 
     
     for (var i = 0; i < customData.length; i++){
@@ -31,6 +35,7 @@ export const  DownloadButton= (props)=> {
       delete obj["alt_text2"]
       delete obj["is_alt_text1_selected"]
       delete obj["document"]
+      delete obj["document_name"]
     }
     resultdata["figures"]=customData
 
@@ -50,7 +55,7 @@ export const  DownloadButton= (props)=> {
   };
 
   return (
-    <button className="btn btn-outline-primary" onClick={handleDownload}>Download JSON</button>
+    <button className="mx-2 btn btn-outline-primary" onClick={handleDownload}>Download JSON</button>
   );
 }
 

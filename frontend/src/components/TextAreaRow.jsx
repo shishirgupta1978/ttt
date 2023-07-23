@@ -4,7 +4,6 @@ import React, { useState } from 'react';
 
 
 export const TextAreaRow = (props) => {
-  const [figure, setFigure1] = useState(props.figure);
   const [editMode, setEditMode] = useState(false);
 
   const handleTextareaChange = (event, figureId) => {
@@ -65,7 +64,7 @@ export const TextAreaRow = (props) => {
     });
 
 
-    props.setFigure({ ...figure, is_alt_text1_selected: Number(event.target.value) === 1 ? true : false });
+ //   props.setFigure({ ...props.figure, is_alt_text1_selected: Number(event.target.value) === 1 ? true : false });
 //    props.handleTextAreaSelection(props.figure.id, event.target.value);
   };
 
@@ -79,14 +78,14 @@ export const TextAreaRow = (props) => {
           type="radio"
           value={1}
           checked={props.figure.is_alt_text1_selected === true}
-          onChange={(event) => handleTextAreaSelection(event, figure.id)}
+          onChange={(event) => handleTextAreaSelection(event, props.figure.id)}
         />&nbsp;&nbsp;&nbsp;Alt&nbsp;Text&nbsp;1
         <br />
         <input
           type="radio"
           value={0}
           checked={props.figure.is_alt_text1_selected == false}
-          onChange={(event) => handleTextAreaSelection(event, figure.id)}
+          onChange={(event) => handleTextAreaSelection(event, props.figure.id)}
         />&nbsp;&nbsp;&nbsp;Alt&nbsp;Text&nbsp;2
       </td>
       <td colSpan={4} style={{ verticalAlign: "middle", paddingLeft: "20px" }}>
@@ -94,7 +93,7 @@ export const TextAreaRow = (props) => {
           <textarea
             value={props.figure.alt_text1}
             style={{ padding: "5px", margin: "0px", border: "0", width:'100%' }}
-            onChange={(event) => handleTextareaChange(event, figure.id)}
+            onChange={(event) => handleTextareaChange(event, props.figure.id)}
             readOnly={!editMode}
             rows={2}
           />
@@ -102,7 +101,7 @@ export const TextAreaRow = (props) => {
           <textarea
             value={props.figure.alt_text2}
             style={{ padding: "5px", margin: "0px", border: "0", width:'100%' }}
-            onChange={(event) => handleTextareaChange2(event, figure.id)}
+            onChange={(event) => handleTextareaChange2(event, props.figure.id)}
             readOnly={!editMode}
             rows={2}
           />

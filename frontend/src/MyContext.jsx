@@ -7,9 +7,32 @@ import { toast } from "react-toastify";
 
 const BASE_URL = import.meta.env.VITE_BASE_URL;
 
+export const setuser =(token)=>{
+localStorage.setItem("Tokens",token)
+}
+
+export const removeUser=()=>{
+  localStorage.removeItem("Tokens")
+}
+
+export const getAccessToken = ()=>{
+  return localStorage.getItem("Tokens") ? JSON.parse(localStorage.getItem("Tokens")).access :null
+
+}
+
+export const getRefreshToken = ()=>{
+  return localStorage.getItem("Tokens") ? JSON.parse(localStorage.getItem("Tokens")).refresh :null
+
+}
+
+export const getUser=()=>{
+  return  localStorage.getItem("Tokens") ? jwt_decode(JSON.parse(localStorage.getItem("Tokens")).access) : null
+}
+
+
 export const MyContext = createContext();
 export const MyProvider = (props) => {
-  const [context, setContext] = useState({ 'user': localStorage.getItem("Tokens") ? jwt_decode(JSON.parse(localStorage.getItem("Tokens"))?.access) : null });
+  const [context, setContext] = useState({ 'user': getUser() });
 
   return (
     <MyContext.Provider value={{ context, setContext }}>
@@ -17,55 +40,51 @@ export const MyProvider = (props) => {
     </MyContext.Provider>
   );
 }
+export const refresh=(setContext)=>{
 
+  const rtoken = getRefreshToken()
+
+  if (rtoken) {
+
+    axios.post(`${BASE_URL}/api/token/refresh/`, { refresh: `${rtoken}` }).then((response) => {
+      localStorage.setItem("Tokens", JSON.stringify({ refresh: `${rtoken}`, access: response.data.access }));
+      setContext({user: getUser() })
+
+    })
+      .catch((error) => {
+        const message =
+          (error.response &&
+            error.response.data &&
+            error.response.data.message) ||
+          error.message ||
+          error.toString();
+
+      })
+
+
+
+  }
+
+
+
+
+
+
+}
 
 
 
 
 
 export const axiosApi = (url, config, setData, setContext) => {
-
-
   setData({ 'is_loading': true, 'is_error': false, 'is_success': false, 'result': null, 'message': null })
-  setContext({ 'user': localStorage.getItem("Tokens") ? jwt_decode(JSON.parse(localStorage.getItem("Tokens"))?.access) : null })
-
-
-
-
-  const token = localStorage.getItem("Tokens") ? JSON.parse(localStorage.getItem("Tokens"))?.access : null
-
-
+  refresh(setContext);
+  const accessToken = getAccessToken()
   if (config.headers["Authorization"]) {
-    config.headers["Authorization"] = "Bearer " + token
+    config.headers["Authorization"] = "Bearer " + accessToken
   }
-
   axios(`${BASE_URL}/${url}`, config).then((response) => {
     setData({ 'is_loading': false, 'is_error': false, 'is_success': true, 'result': response.data, 'message': null }); console.log(response);
-    const rtoken = localStorage.getItem("Tokens") ? JSON.parse(localStorage.getItem("Tokens"))?.refresh : null
-
-    if (rtoken) {
-
-      axios.post(`${BASE_URL}/api/token/refresh/`, { refresh: `${rtoken}` }).then((response) => {
-        localStorage.setItem("Tokens", JSON.stringify({ refresh: `${rtoken}`, access: response.data.access }));
-        setContext({user: localStorage.getItem("Tokens") ? jwt_decode(JSON.parse(localStorage.getItem("Tokens"))?.access) : null })
-
-      })
-        .catch((error) => {
-          const message =
-            (error.response &&
-              error.response.data &&
-              error.response.data.message) ||
-            error.message ||
-            error.toString();
-          localStorage.removeItem("Tokens");
-          setContext({ 'user': null })
-
-        })
-
-
-
-    }
-
 
 
   })
@@ -80,7 +99,7 @@ export const axiosApi = (url, config, setData, setContext) => {
         error.toString();
 
       if (error?.response?.status == 401) {
-        localStorage.removeItem("Tokens");
+        removeUser();
         setContext({ 'user': null })
         toast.error("Session Expired or Unauthorised\n" + message);
       }

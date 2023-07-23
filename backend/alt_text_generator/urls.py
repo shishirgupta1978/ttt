@@ -8,6 +8,8 @@ urlpatterns = [
 
     path('upload-document/', views.api_upload_document, name='api_upload_document'),
     path('save-data/', views.save_data, name='api_save_data'),
+    path('get-documents/', views.get_documents, name='api_get_documents'),
+    path('get-document/<int:id>/', views.get_document, name='api_get_document'),
 
 ]
 

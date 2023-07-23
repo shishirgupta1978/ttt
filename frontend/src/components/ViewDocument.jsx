@@ -14,12 +14,15 @@ export const ViewDocument = (props) => {
     const handleGetData = () => {
         const updatedData = JSON.stringify(figures);
         console.log(updatedData)
-        const token = localStorage.getItem("Tokens") ? JSON.parse(localStorage.getItem("Tokens"))?.access : ''
-        const config = { method: "post", headers: { 'Content-Type': "application/json", "Authorization": "Bearer " + token }, data: updatedData }
+        const config = { method: "post", headers: { 'Content-Type': "application/json", "Authorization": true }, data: updatedData }
         axiosApi(`/api/alt-text-generator/save-data/`, config, setData1, setContext);
 
     };
 
+    const cleardata =()=>{
+        props.setData({ 'is_loading': false, 'is_error': false, 'is_success': false, 'result': null, 'message': null })
+
+    }
 
         return (
             <div className="bg-light" style={{ width: '100%' }}>
@@ -45,8 +48,8 @@ export const ViewDocument = (props) => {
 
                 </div>
                 <MDBRow className='p-2'>
-                    <MDBCol>
-                        <MDBBtn style={{ backgroundColor: '#3d4a61' }} className='text-white' onClick={handleGetData}>Save Data</MDBBtn></MDBCol><MDBCol> {data1.result && <DownloadButton result={data1.result} />}</MDBCol><MDBCol></MDBCol></MDBRow>
+                    <MDBCol> <MDBBtn style={{ backgroundColor: '#3d4a61' }} className='text-white' onClick={handleGetData}>Save Data</MDBBtn>
+                        <button className='mx-2 btn btn-outline-secondary' onClick={()=>{cleardata();}}>Back</button> {data1.result && <DownloadButton result={data1.result} />}</MDBCol><MDBCol></MDBCol></MDBRow>
             </div>
 
         )

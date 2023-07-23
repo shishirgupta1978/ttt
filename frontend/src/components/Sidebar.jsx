@@ -8,8 +8,9 @@ import { Spinner } from '../components';
 
 
 
-export const Sidebar = ({ isOpen, toggle, setData }) => {
+export const Sidebar = ({ isOpen, toggle, setData ,setDocxFile}) => {
     const { context,setContext } = useContext(MyContext);
+   
 
 	
 	const [source, setSource] = useState(null);
@@ -17,8 +18,18 @@ export const Sidebar = ({ isOpen, toggle, setData }) => {
 
     const handleSourceChange = (event) => {
       setSource(event.target.files[0]);
+
+      
+    
+      cleardata(); 
+      setDocxFile(URL.createObjectURL(event.target.files[0]));
+
       };
  
+      const cleardata =()=>{
+        setData({ 'is_loading': false, 'is_error': false, 'is_success': false, 'result': null, 'message': null })
+
+    }
   
 	const submitHandler = (e) => {
 		e.preventDefault();
@@ -27,8 +38,7 @@ export const Sidebar = ({ isOpen, toggle, setData }) => {
     {
     mformData.append("source", source);
     mformData.append("type", "Docx");
-    const token=localStorage.getItem("Tokens") ? JSON.parse(localStorage.getItem("Tokens"))?.access :''
-			const config = { method: "post", headers: { 'Content-Type': 'multipart/form-data', "Authorization": "Bearer " + token  }, data:mformData }
+			const config = { method: "post", headers: { 'Content-Type': 'multipart/form-data', "Authorization": true }, data:mformData }
 			axiosApi(`/api/alt-text-generator/upload-document/`, config, setData,setContext);
     }
     else{

@@ -31,8 +31,8 @@ export const ProfilePage = () => {
 	
 	
 	 const closeHandle=(id)=>{
-        const token=localStorage.getItem("Tokens") ? JSON.parse(localStorage.getItem("Tokens"))?.access :''
-        const config1={method:"get",headers: {"Content-Type": "application/json", "Authorization": "Bearer " + token}}
+        
+        const config1={method:"get",headers: {"Content-Type": "application/json", "Authorization": true}}
         
         axiosApi(`ticket/api/close-ticket/${id}/`,config1,setCloseData,setContext);
         setId(id);
@@ -47,8 +47,7 @@ export const ProfilePage = () => {
 		}
 		
 
-		const token=localStorage.getItem("Tokens") ? JSON.parse(localStorage.getItem("Tokens"))?.access :''
-		const config = { method: "get", headers: { "Content-Type": "application/json", "Authorization": "Bearer " + token } }
+		const config = { method: "get", headers: { "Content-Type": "application/json", "Authorization": true } }
 		if(!loadData.is_success)
 		{
 			axiosApi(`api/auth/users/me`, config, setLoadData, setContext);
@@ -66,9 +65,8 @@ export const ProfilePage = () => {
 
 	const submitHandler = (e) => {
 		e.preventDefault();
-        const token=localStorage.getItem("Tokens") ? JSON.parse(localStorage.getItem("Tokens"))?.access :''
-		
-		const config = { method: "put", headers: {"Content-Type": "application/json", "Authorization": "Bearer " + token}, data:formData }
+    	
+		const config = { method: "put", headers: {"Content-Type": "application/json", "Authorization": true}, data:formData }
 		axiosApi(`api/update/${uid}`, config, setData, setContext);
 
 	};	

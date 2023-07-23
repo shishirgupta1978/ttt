@@ -43,8 +43,8 @@ export const ChangePasswordPage = () => {
 		if (formData.new_password !== formData.re_new_password) {
 			toast.error("Passwords do not match");
 		} else {
-			const token=localStorage.getItem("Tokens") ? JSON.parse(localStorage.getItem("Tokens"))?.access :''
-			const config = { method: "post", headers: { "Content-Type": "application/json", "Authorization": "Bearer " + token }, data:formData }
+			
+			const config = { method: "post", headers: { "Content-Type": "application/json", "Authorization": true }, data:formData }
 			axiosApi(`api/auth/users/set_password/`, config, setData,setContext);
 	
 		}

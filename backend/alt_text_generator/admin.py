@@ -20,9 +20,9 @@ class FigureAdmin(admin.ModelAdmin):
     list_display = ["id","get_document_name","number", "alt_text1", "alt_text2","is_alt_text1_selected"]
 
     def get_document_name(self, obj):
-        return obj.document.source.url.replace("uploads/","")
+        return obj.document.name
         
-    get_document_name.short_description = 'Document'
+    get_document_name.short_description = 'Name'
 
 
 admin.site.register(Figure,FigureAdmin)

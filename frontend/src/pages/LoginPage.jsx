@@ -6,13 +6,12 @@ import { Link, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import {Spinner,Title} from "../components";
 import {MyContext,axiosApi} from "..";
-import { NavLink } from 'react-router-dom';
 
 
 
 export const LoginPage = () => {
 	const [data, setData] = useState({ 'is_loading': false, 'is_error': false, 'is_success': false, 'result': null, 'message': null })
-	const { context,setContext } = useContext(MyContext);
+	const {context,setContext } = useContext(MyContext);
 	const [isChecked, setIsChecked] = useState(localStorage.getItem("email") ? true :false);
 
 	const handleCheckboxChange = (event) => {
@@ -43,7 +42,7 @@ export const LoginPage = () => {
 		{
 			console.log(data);
 			localStorage.setItem("Tokens",JSON.stringify(data.result));
-     	    setContext({...context,user:jwt_decode(data.result?.access)});
+     	    setContext({...context,user:jwt_decode(data.result.access)});
 
 			navigate("/");
 
@@ -88,7 +87,7 @@ export const LoginPage = () => {
 			<br/>
 			<MDBContainer className="bg-white p-4"  style={{width:'350px',margin:"auto", borderRadius:"15px"}}>
 			
-							<h3 className="text-center">
+							<h3 className="text-center" >
 								<FaSignInAlt /> Login
 							</h3>
 							<hr className="hr-text" />
