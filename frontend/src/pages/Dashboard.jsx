@@ -19,10 +19,10 @@ export const Dashboard = (props) => {
     return (
       <>
         <Sidebar isOpen={isOpen} toggle={toggleSidebar} setData={setData} setDocxFile={setDocxFile} />
-        <div className="dashboard-content bg-light" >
+        <div className="dashboard-content" >
         {data.result == null  && data.is_loading == false && <ShowAllDocuments  setData2={setData}/>}
         {data.is_loading && <Spinner />}    
-        {data.is_loading && <div style={{height:"80vh",verticalAlign: 'middle'}}><h1 className='text-center'>Please Wait</h1></div>}{data.is_success && data.result && <ViewDocument result={data.result} data={data} setData={setData} />}
+        {data.is_loading && <><h3 className='text-center'>Please Wait</h3><hr className='hr-text'/></>}{data.is_success && data.result && <ViewDocument result={data.result} data={data} setData={setData} />}
           <button className="toggle-button"  onClick={toggleSidebar}>
           <PiToggleLeftFill style={{color:'#3d4a61'}} size={60}  />
           </button>

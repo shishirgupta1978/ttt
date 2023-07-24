@@ -31,11 +31,11 @@ export const ShowAllDocuments = ({setData2}) => {
     return (<>
     <h3 className='text-center'>All Documents</h3>
     <hr className="hr-text" />
-        <div style={{ marginTop:"5px", height: "71vh", verticalAlign: 'middle',overflowY:'scroll' }}>
+        <div style={{ marginTop:"5px", verticalAlign: 'middle',overflowY:'auto' }}>
 
             <table className="table" >
-                <thead style={{borderBottom:"2px solid grey"}}>
-                    <th style={{paddingLeft:'15px'}}>File Name</th><th style={{paddingLeft:'15px'}}>Date Created</th><th  style={{paddingLeft:'15px'}}>No of Figures</th><th  style={{paddingLeft:'15px'}}></th>
+                <thead style={{borderBottom:"2px solid grey"}}><tr>
+                    <th style={{paddingLeft:'15px'}}>File Name</th><th style={{paddingLeft:'15px'}}>Date Created</th><th  style={{paddingLeft:'15px'}}>No of Figures</th><th  style={{paddingLeft:'15px'}}></th></tr>
                 </thead>
                 <tbody>
 

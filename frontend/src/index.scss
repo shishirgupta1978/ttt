@@ -5,14 +5,13 @@
   margin: 0;
   padding: 0;
   font-family: "Outfit", sans-serif;
-  color: #3d4a61;
 }
 th{
 	text-transform: uppercase;
 	font-size: large;
 }
 main {
-	min-height: 94vh;
+	height: 100vh;
 	background-color: #0000001c;
 }
 /* margin top */
@@ -26,8 +25,9 @@ a {
 	font-size: 3.25rem;
 }
 .hr-text {
-	background: linear-gradient(to right, transparent, #000000, transparent);
+	background-color: linear-gradient(to right, transparent, #000000, transparent);
 	line-height: 24px;
+
 }
 /* footer */
 footer {
@@ -233,7 +233,8 @@ a.btn.btn-primary:active {
   }
   .dashboard-content {
 	padding: 0px;
-	height: 84vh;
+	height: 90vh;
+	background-color: #fff;
 	transition: margin-left 0.3s ease-in-out; /* Smoothly adjust the margin */
   }
   

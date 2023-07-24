@@ -20,11 +20,13 @@ const divStyle = {
 export const Layout = () => {
   return (
     <>
-    
+   
        <Navbar/>
-       <div style={divStyle} className="main-height">   
+       <div style={divStyle} className="main-height">
+          
       <Outlet/>
       </div> 
+      
       <Footer/>
      
 

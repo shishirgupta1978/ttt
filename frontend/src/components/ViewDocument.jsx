@@ -25,16 +25,17 @@ export const ViewDocument = (props) => {
     }
 
         return (
-            <div className="bg-light" style={{ width: '100%' }}>
-                {data1.is_loading && <Spinner />}
+            <>
+                
                 <h3 className="text-center">
                     Alt Text
                 </h3>
                 <hr className="hr-text" />
+                {data1.is_loading && <Spinner />}
 
-                <div className="card-body" style={{ maxHeight: '59vh', overflowY: 'auto', boxShadow: '3px 3px 2px grey' }}>
+                <div className="card-body" style={{ maxHeight: '59vh', width:'100%', overflowY: 'auto', boxShadow: '2px 2px 1px grey' }}>
 
-                    <table className="table" >
+                    <table className="table" style={{width:"100%"}} >
                         <tbody>
 
                             {figures.map((figure) => (
@@ -47,10 +48,12 @@ export const ViewDocument = (props) => {
 
 
                 </div>
+                <MDBContainer>
                 <MDBRow className='p-2'>
                     <MDBCol> <MDBBtn style={{ backgroundColor: '#3d4a61' }} className='text-white' onClick={handleGetData}>Save Data</MDBBtn>
                         <button className='mx-2 btn btn-outline-secondary' onClick={()=>{cleardata();}}>Back</button> {data1.result && <DownloadButton result={data1.result} />}</MDBCol><MDBCol></MDBCol></MDBRow>
-            </div>
+                        </MDBContainer>
+            </>
 
         )
 

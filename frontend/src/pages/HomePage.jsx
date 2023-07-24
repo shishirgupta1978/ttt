@@ -11,9 +11,9 @@ export const HomePage = () => {
   return (
     <div>
 
-         {context.user  ? <>      
- <Dashboard session="<p>RW</p>" /></> : <section className="container">
-            <div className="p-1 mb-4  rounded-3">
+         {context.user  ?       
+ <Dashboard  /> : <section className="container">
+            <div className="rounded-3" >
                 <div className="container-fluid">
                     <h1 className="display-5 fw-bold">Alt Text Generator</h1>
                     <p className="col-md-12 fs-4">

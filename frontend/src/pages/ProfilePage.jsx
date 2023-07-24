@@ -10,8 +10,38 @@ import {MyContext,axiosApi} from "..";
 import { NoProfileImg } from "..";
 
 export const ProfilePage = () => {
-	const {uid} =useParams()
-	const [id,setId]  = useState(uid);
+	const [selectedImage, setSelectedImage] = useState(null);
+	const [profileUrl, setProfileUrl] = useState(null);
+	const [documentUrl, setDocumentUrl] = useState(null);
+	const [selectedDocument, setSelectedDocument]=useState(null);
+
+	const handleImageClick = () => {
+	  fileInputRef.current.click();
+	};
+  
+	const handleFileChange = (event) => {
+	  const file = event.target.files[0];
+
+	  setSelectedImage(file);
+	  setProfileUrl(URL.createObjectURL(event.target.files[0]))
+
+
+	  
+	};
+
+	const handleDocumentChange = (event) => {
+		const document = event.target.files[0];
+  
+		setSelectedDocument(document);
+		
+  
+  
+		
+	  };
+  
+	const fileInputRef = React.createRef();
+
+
   
 	const [loadData, setLoadData] = useState({ 'is_loading': false, 'is_error': false, 'is_success': false, 'result': null, 'message': null })
 	const [data, setData] = useState({ 'is_loading': false, 'is_error': false, 'is_success': false, 'result': null, 'message': null })
@@ -20,6 +50,7 @@ export const ProfilePage = () => {
 	const [formData, setFormData] = useState({
 		first_name: '',
 		last_name: '',
+		
 	  });
 
 	  const handleChange = (event) => {
@@ -30,20 +61,13 @@ export const ProfilePage = () => {
 	  };
 	
 	
-	 const closeHandle=(id)=>{
-        
-        const config1={method:"get",headers: {"Content-Type": "application/json", "Authorization": true}}
-        
-        axiosApi(`ticket/api/close-ticket/${id}/`,config1,setCloseData,setContext);
-        setId(id);
-    }
 
 	const navigate = useNavigate();
 	useEffect(()=>{
 		if(data.is_success)
 		{
 			toast.success("Record update successfully.")
-			navigate("/home/")
+			navigate("/")
 		}
 		
 
@@ -53,7 +77,13 @@ export const ProfilePage = () => {
 			axiosApi(`api/auth/users/me`, config, setLoadData, setContext);
 		}
 		else{
-			setFormData({first_name:loadData.result.first_name ? loadData.result.first_name:'' ,last_name:loadData.result.last_name ? loadData.result.last_name : '',documents:loadData.result.documents ? loadData.result.documents :""});
+			
+			setFormData({...formData, first_name:loadData.result.first_name ? loadData.result.first_name:'' ,last_name:loadData.result.last_name ? loadData.result.last_name : ''});
+
+			setDocumentUrl(loadData.result.documents);
+		    setProfileUrl(loadData.result.profile_pic);
+
+			
 
 
 		}
@@ -65,9 +95,25 @@ export const ProfilePage = () => {
 
 	const submitHandler = (e) => {
 		e.preventDefault();
+		const myformData = new FormData();
+		if(selectedDocument)
+		{
+			myformData.append("documents", selectedDocument);
+		}
+		if(selectedImage)
+		{
+			myformData.append("profile_pic", selectedImage);
+
+		}
+			myformData.append("first_name", formData.first_name);
+			myformData.append("last_name", formData.last_name);
+
+			const config = { method: "post", headers: { 'Content-Type': 'multipart/form-data', "Authorization": true }, data:myformData }
+			axiosApi(`api/auth/user-update/`, config, setData,setContext);
+		
+
+		
     	
-		const config = { method: "put", headers: {"Content-Type": "application/json", "Authorization": true}, data:formData }
-		axiosApi(`api/update/${uid}`, config, setData, setContext);
 
 	};	
 
@@ -87,12 +133,30 @@ export const ProfilePage = () => {
 				<MDBRow className="mt-3">
 					<MDBCol className="justify-content-center">
 						<form onSubmit={submitHandler}>
-							<img src={NoProfileImg} alt="Profile Pic" width="80px" height="80px" className="mb-3" style={{margin:'auto',display :'block'}} />
+
+						<img
+        src={profileUrl ? profileUrl : NoProfileImg}
+        alt="Click to Upload"
+        onClick={handleImageClick}
+		width="80px" height="80px" className="mb-3" style={{margin:'auto',borderRadius: '50%', display :'block',cursor: 'pointer'}}
+      />
+      <input
+        type="file"
+        accept="image/*"
+        onChange={handleFileChange}
+        style={{ display: 'none' }}
+        ref={fileInputRef}
+      />
+    
+
+
+
+							
 							<MDBInput  label='First Name' type='text' name='first_name' value={formData.first_name} onChange={handleChange} className="mb-3"/>
 							<MDBInput  label='Last Name' type='text' name='last_name' value={formData.last_name} onChange={handleChange} className="mb-2"/>
-							Select Document: {formData.documents ? <a href="">Download</a> :""}
-							<MDBInput  type='file' name='documents'  className="mb-2"/>	
-							<MDBBtn type="submit" color="dark" style={{backgroundColor: '#3d4a61' }} className="mt-3 w-100">Update</MDBBtn>
+							Update Documents if any: {documentUrl ? <a href={documentUrl}>Download</a> :""}
+							<MDBInput  type='file' name='documents' accept="zip,application/octet-stream,application/zip,application/x-zip,application/x-zip-compressed" onChange={handleDocumentChange} className="mb-2"/>	
+							<MDBBtn type="submit" style={{backgroundColor: '#3d4a61' }} className="mt-3 w-100">Update</MDBBtn>
 						</form>
 					</MDBCol>
 				</MDBRow>

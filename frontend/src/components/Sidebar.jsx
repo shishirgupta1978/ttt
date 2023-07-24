@@ -63,7 +63,7 @@ export const Sidebar = ({ isOpen, toggle, setData ,setDocxFile}) => {
       <div className="sidebar-menu">
       <MDBContainer className="p-4"  style={{width:'350px',margin:"auto", borderRadius:"15px"}}>
 			
-            <MDBRow className="mt-3">
+            <MDBRow>
               <MDBCol className="justify-content-center">
                             
               <form onSubmit={submitHandler}>

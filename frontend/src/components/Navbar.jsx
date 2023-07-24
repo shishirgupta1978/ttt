@@ -100,7 +100,7 @@ export const Navbar = () => {
 
 	return (
     <>
-        <MDBNavbar sticky  expand='lg' style={{backgroundColor: '#3d4a61' }} dark  >
+        <MDBNavbar sticky  expand='lg' style={{backgroundColor: '#3d4a61',minHeight:'6vh'  }} dark  >
         <MDBContainer fluid>
           <MDBNavbarBrand tag={NavLink} to="/"><img src={LogoImg} height="30px"/></MDBNavbarBrand>
   
@@ -122,8 +122,8 @@ export const Navbar = () => {
               <MDBNavbarItem>
               <MDBDropdown>
                 <MDBDropdownToggle  tag={NavLink} className='nav-link' role='button'>
-                 Hi, {context.user.username.toUpperCase() } <img
-                src={context.user.pdrofile_pic ? context.user.profile_pic : NoProfileImg}
+                 Hi, {context.user.first_name ? context.user.first_name.toUpperCase(): context.user.username } <img
+                src={context.user.profile_pic ? import.meta.env.VITE_BASE_URL+context.user.profile_pic : NoProfileImg}
                 alt=''
                 style={{ width: '28px', height: '28px' }}
                 className='rounded-circle'
