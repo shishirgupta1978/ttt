@@ -84,7 +84,7 @@ export const TextAreaRow = (props) => {
         <input
           type="radio"
           value={0}
-          checked={props.figure.is_alt_text1_selected == false}
+          checked={props.figure.is_alt_text1_selected === false}
           onChange={(event) => handleTextAreaSelection(event, props.figure.id)}
         />&nbsp;&nbsp;&nbsp;Alt&nbsp;Text&nbsp;2
       </td>

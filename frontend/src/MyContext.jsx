@@ -11,6 +11,35 @@ export const setuser =(token)=>{
 localStorage.setItem("Tokens",token)
 }
 
+const msghandle =(error)=>{
+  const message1 =
+  (error.response &&
+    error.response.data &&
+    error.response.data.message) ||
+  error.message ||
+  error.toString();
+  const message2 =
+  (error.response &&
+    error.response.data) 
+    let n="";
+    if(message2)
+    {
+
+
+
+
+
+      return JSON.stringify(message2)+" ("+message1+")";
+    }
+    else{
+      return message1;
+    }
+
+
+
+}
+
+
 export const removeUser=()=>{
   localStorage.removeItem("Tokens")
 }
@@ -52,12 +81,8 @@ export const refresh=(setContext)=>{
 
     })
       .catch((error) => {
-        const message =
-          (error.response &&
-            error.response.data &&
-            error.response.data.message) ||
-          error.message ||
-          error.toString();
+        const message =msghandle(error)
+        console.log("error")
 
       })
 
@@ -90,18 +115,13 @@ export const axiosApi = (url, config, setData, setContext) => {
   })
     .catch((error) => {
       setData({ 'is_loading': false, 'is_error': true, 'is_success': false, 'result': null, 'message': error });
-      console.log(error);
-      const message =
-        (error.response &&
-          error.response.data &&
-          error.response.data.message) ||
-        error.message ||
-        error.toString();
+      
+      const message=msghandle(error)
 
       if (error?.response?.status == 401) {
         removeUser();
         setContext({ 'user': null })
-        toast.error("Session Expired or Unauthorised\n" + message);
+        toast.error( message);
       }
       else {
         toast.error(message);

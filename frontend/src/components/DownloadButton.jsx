@@ -47,7 +47,7 @@ export const  DownloadButton= (props)=> {
 
     const link = document.createElement('a');
     link.href = url;
-    link.download = 'custom_data.json';
+    link.download =document_name +'.json';
 
     link.click();
 

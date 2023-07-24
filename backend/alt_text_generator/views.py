@@ -66,6 +66,7 @@ def save_data(request):
         fig=Figure.objects.get(id=obj['id'])
         fig.alt_text1=obj['alt_text1']
         fig.alt_text2=obj['alt_text2']
+        fig.is_alt_text1_selected=obj['is_alt_text1_selected']
         obj["document_name"]=fig.document.name
 
         fig.save()
