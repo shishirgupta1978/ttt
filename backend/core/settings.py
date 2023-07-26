@@ -45,7 +45,7 @@ ROOT_URLCONF = 'core.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [BASE_DIR.parent / "frontend" / "dist"],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -103,12 +103,15 @@ USE_TZ = True
 DATETIME_FORMAT = '%d-%m-%Y %H:%M:%S' 
 
 STATIC_URL = "static/"
-
+STATICFILES_DIRS = [BASE_DIR.parent / "frontend" / "dist" / "static"   ]
 STATIC_ROOT = BASE_DIR.parent / "staticfiles"
-STATICFILES_DIR = []
+
 MEDIA_URL = "/media/"
 MEDIA_ROOT = BASE_DIR.parent / "mediafiles"
-
+STATICFILES_FINDERS = [
+    'django.contrib.staticfiles.finders.FileSystemFinder',
+    'django.contrib.staticfiles.finders.AppDirectoriesFinder',
+]
 
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
@@ -129,6 +132,7 @@ STORAGES = {
         "BACKEND": "whitenoise.storage.CompressedManifestStaticFilesStorage",
     },
 }
+
 CORS_ALLOW_ALL_ORIGINS = True
 
 SIMPLE_JWT = {

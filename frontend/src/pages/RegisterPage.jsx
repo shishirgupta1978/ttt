@@ -44,7 +44,7 @@ export const RegisterPage = () => {
 		} else {
 			
 			const config = { method: "post", headers: { "Content-Type": "application/json" }, data:formData }
-			axiosApi(`/api/auth/users/`, config, setData,setContext);
+			axiosApi(`api/auth/users/`, config, setData,setContext);
 	
 		}
 	};

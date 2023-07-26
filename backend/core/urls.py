@@ -2,10 +2,11 @@ from django.conf import settings
 from django.conf.urls.static import static
 from django.contrib import admin
 from django.urls import include, path
-from account.views import send_enquiry_email,MyTokenObtainPairView,MyTokenRefreshView,update_profile
+from account.views import send_enquiry_email,MyTokenObtainPairView,MyTokenRefreshView,update_profile,index
 
 
 urlpatterns = [
+    path("", index, name="front"),
     path('admin/', admin.site.urls),
     path("api/send_enquery/", send_enquiry_email, name="send-enquiry"),
     path('api/auth/', include('djoser.urls')),

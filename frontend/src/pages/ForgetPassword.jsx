@@ -37,7 +37,7 @@ export const ForgetPassword = () => {
 		e.preventDefault();
 
 		const config = { method: "post", headers: { "Content-Type": "application/json" }, data:formData }
-		axiosApi(`/api/auth/users/reset_password/`, config, setData, setContext);
+		axiosApi(`api/auth/users/reset_password/`, config, setData, setContext);
 
 		
 	};

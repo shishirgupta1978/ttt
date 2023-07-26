@@ -1,6 +1,7 @@
 import React, {useEffect, useState,useContext } from 'react'
 import { MyContext, axiosApi } from '..';
 
+
 export const ShowAllDocuments = ({setData2}) => {
     const [data, setData] = useState({ 'is_loading': false, 'is_error': false, 'is_success': false, 'result': null, 'message': null })
     const  {context,setContext} = useContext(MyContext)
@@ -9,20 +10,15 @@ export const ShowAllDocuments = ({setData2}) => {
     const getAltText = (id) => {
         setData2({ 'is_loading': false, 'is_error': false, 'is_success': false, 'result': null, 'message': null })
         const config1 = { method: "get", headers: { "Content-Type": "application/json", "Authorization": true } }
-        axiosApi(`/api/alt-text-generator/get-document/${id}`, config1, setData2, setContext);
-
-
-
+        axiosApi(`api/alt-text-generator/get-document/${id}`, config1, setData2, setContext);
     }
 
     useEffect(() => {
 
         const config = { method: "get", headers: { "Content-Type": "application/json", "Authorization": true } }
-        axiosApi(`/api/alt-text-generator/get-documents/`, config, setData, setContext);
+        axiosApi(`api/alt-text-generator/get-documents/`, config, setData, setContext);
 
-    }
-
-        , [])
+    }, [])
 
 
 

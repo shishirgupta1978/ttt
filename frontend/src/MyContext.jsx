@@ -5,7 +5,7 @@ import { toast } from "react-toastify";
 
 
 
-const BASE_URL = import.meta.env.VITE_BASE_URL;
+export const BASE_URL = import.meta.env.VITE_BASE_URL && import.meta.env.VITE_BASE_URL != undefined ? import.meta.env.VITE_BASE_URL :"";
 
 export const setuser =(token)=>{
 localStorage.setItem("Tokens",token)
@@ -102,6 +102,8 @@ export const refresh=(setContext)=>{
 
 
 export const axiosApi = (url, config, setData, setContext) => {
+
+  
   setData({ 'is_loading': true, 'is_error': false, 'is_success': false, 'result': null, 'message': null })
   refresh(setContext);
   const accessToken = getAccessToken()

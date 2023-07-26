@@ -1,4 +1,6 @@
 from django.core.mail import send_mail
+
+from django.shortcuts import render
 from rest_framework import permissions
 from rest_framework.decorators import api_view, permission_classes
 from rest_framework.permissions import IsAuthenticated
@@ -12,6 +14,11 @@ from rest_framework import status
 
 #User = get_user_model()
 
+
+
+
+def index(request):
+    return render(request,"index.html",{})
 
 
 @api_view(["POST"])

@@ -9,6 +9,7 @@ import {MDBContainer,MDBNavbar,MDBNavbarBrand, MDBNavbarToggler, MDBIcon, MDBNav
 import { FaSignInAlt, FaSignOutAlt } from "react-icons/fa";
 import {BiRefresh} from "react-icons/bi"
 import { NoProfileImg,LogoImg } from '..';
+import { BASE_URL } from '..';
 
 
 
@@ -123,7 +124,7 @@ export const Navbar = () => {
               <MDBDropdown>
                 <MDBDropdownToggle  tag={NavLink} className='nav-link' role='button'>
                  Hi, {context.user.first_name ? context.user.first_name.toUpperCase(): context.user.username } <img
-                src={context.user.profile_pic ? import.meta.env.VITE_BASE_URL+context.user.profile_pic : NoProfileImg}
+                src={context.user.profile_pic ? BASE_URL+context.user.profile_pic : NoProfileImg}
                 alt=''
                 style={{ width: '28px', height: '28px' }}
                 className='rounded-circle'

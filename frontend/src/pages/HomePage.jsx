@@ -13,7 +13,7 @@ export const HomePage = () => {
 
          {context.user  ?       
  <Dashboard  /> : <section className="container">
-            <div className="rounded-3" >
+            <div className="rounded-3 mt-5" >
                 <div className="container-fluid">
                     <h1 className="display-5 fw-bold">Alt Text Generator</h1>
                     <p className="col-md-12 fs-4">

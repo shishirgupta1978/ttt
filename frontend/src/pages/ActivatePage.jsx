@@ -31,7 +31,7 @@ export const ActivatePage = () => {
 		};
 
 		const config = { method: "post", headers: { "Content-Type": "application/json" }, data:userData }
-			axiosApi(`/api/auth/users/activation/`, config, setData, setContext);
+			axiosApi(`api/auth/users/activation/`, config, setData, setContext);
 	
 		
 	};
