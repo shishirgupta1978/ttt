@@ -2,7 +2,7 @@ from django.conf import settings
 from django.conf.urls.static import static
 from django.contrib import admin
 from django.urls import include, path
-from account.views import send_enquiry_email,MyTokenObtainPairView,MyTokenRefreshView,update_profile,index
+from account.views import send_enquiry_email,MyTokenObtainPairView,MyTokenRefreshView,update_profile,index,catch_all
 
 
 urlpatterns = [
@@ -15,6 +15,7 @@ urlpatterns = [
     path('api/token/', MyTokenObtainPairView.as_view(), name='token_obtain'),
     path('api/token/refresh/', MyTokenRefreshView.as_view(), name='token_refresh'),
     path('api/alt-text-generator/', include('alt_text_generator.urls')),
+    path('<path:unknown_path>/', catch_all, name='catch_all'),
 ]
 
 urlpatterns +=  static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

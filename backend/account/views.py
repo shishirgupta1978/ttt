@@ -21,6 +21,11 @@ def index(request):
     return render(request,"index.html",{})
 
 
+
+def catch_all(request, unknown_path):
+    # Render the index page or any other page you want
+    return render(request, 'index.html') 
+
 @api_view(["POST"])
 @permission_classes([permissions.AllowAny])
 def send_enquiry_email(request):
